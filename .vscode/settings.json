@@ -1,0 +1,12 @@
+{
+    "files.associations": {
+        "limits": "cpp"
+    },
+    "makefile.launchConfigurations": [
+        {
+            "cwd": "/home/Vanuta/TRRiSPO",
+            "binaryPath": "/home/Vanuta/TRRiSPO/my_program",
+            "binaryArgs": []
+        }
+    ]
+}
