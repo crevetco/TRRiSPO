@@ -13,6 +13,9 @@ OBJS = $(SRCS:.cpp=.o)
 # Executable name
 TARGET = my_program
 
+# Installation directory
+INSTALL_DIR = /usr/local/bin
+
 # Default target
 all: $(TARGET)
 
@@ -28,5 +31,9 @@ $(TARGET): $(OBJS)
 clean:
 	rm -f $(OBJS) $(TARGET)
 
+# Install the executable
+install: $(TARGET)
+	cp $(TARGET) $(INSTALL_DIR)
+
 # Phony targets
-.PHONY: all clean
+.PHONY: all clean install
