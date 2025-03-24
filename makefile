@@ -12,7 +12,7 @@ OBJS = $(SRCS:.cpp=.o)
 
 # Output directories
 BUILD_DIR = ../usr/bin
-INSTALL_DIR = /usr/bin
+INSTALL_DIR = /usr/local/bin
 
 # Executable name
 TARGET = my_program
