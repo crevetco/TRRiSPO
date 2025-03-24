@@ -91,7 +91,7 @@ jobs:
           docker build \
           -t ${{ secrets.DOCKER_USERNAME }}/bubble-sort:latest \
           -t ${{ secrets.DOCKER_USERNAME }}/bubble-sort:$VERSION \
-          ./actifacts \
+          ./artifacts \
           -- push
 
       - name: Run container
