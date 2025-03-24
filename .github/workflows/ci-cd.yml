@@ -44,20 +44,18 @@ jobs:
       - name: Клонирование репозитория
         uses: actions/checkout@v4
 
-      - name: Установка зависимостей
-        run: sudo apt update && sudo apt install -y build-essential checkinstall
-
-      - name: Сборка ПО
-        run: make
-
       - name: Сборка .deb пакета
-        run: sudo checkinstall --pkgname=find_max --pkgversion=1.0 --pkggroup=utils -y --install=no
+        run: |
+          sudo checkinstall \
+            --pkgname=bubble_sort \
+            --pkgversion=1.0 \
+            --pkggroup=utils \
+            --install=no \
+            -y \
+            make install
 
-      - name: Переименование и сохранение пакета
-        run: mv find-max_1.0-1_amd64.deb find_max.deb
-
-      - name: Сохранение артефакта (.deb пакета)
+      - name: Сохранение артефакта
         uses: actions/upload-artifact@v4
         with:
-          name: fbubble_sort_package
-          path: bubble_sort.deb
+          name: bubble_sort_package
+          path: ./bubble-sort_*.deb  # Автоматическое совпадение с именем пакета
