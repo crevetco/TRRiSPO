@@ -88,11 +88,7 @@ jobs:
       - name: Build and tag Docker image
         run: |
           VERSION="1.0.0"  # Можно получать из тега (git describe --tags)
-          docker build \
-          -t ${{ secrets.DOCKER_USERNAME }}/bubble-sort:latest \
-          -t ${{ secrets.DOCKER_USERNAME }}/bubble-sort:$VERSION \
-          ./artifacts \
-          -- push
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/bubble-sort:latest -t ${{ secrets.DOCKER_USERNAME }}/bubble-sort:$VERSION ./artifacts -- push
 
       - name: Run container
         run: |
