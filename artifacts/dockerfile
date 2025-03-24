@@ -6,7 +6,7 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 # Копирование .deb пакета с использованием точного имени
-COPY bubble-sort_1.0-1_amd64.deb /tmp/
+COPY bubble-sort_1.0-1_amd64.deb ./tmp/
 
 # Установка пакета с обработкой зависимостей
 RUN dpkg -i /tmp/bubble-sort_1.0-1_amd64.deb || apt-get update && apt-get install -f -y
