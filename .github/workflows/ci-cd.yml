@@ -87,14 +87,12 @@ jobs:
 
       - name: Build and tag Docker image
         run: |
-          VERSION="1.0.0"  # Можно получать из тега (git describe --tags)
           DOCKERHUB_USER="${{ secrets.DOCKER_USERNAME }}"
           docker buildx build \
           --tag $DOCKERHUB_USER/bubble-sort:latest \
-          --tag $DOCKERHUB_USER/bubble-sort:$VERSION \
           --push \
           ./artifacts
 
-      - name: Run container
+      - name: Запуск контейнера
         run: |
-          docker run --rm ${{ secrets.DOCKER_USERNAME }}/bubble-sort:latest 5 50 40 30 20 10
+          echo -e "5\n50\n40\n30\n20\n10" | docker run -i --rm ${{ secrets.DOCKER_USERNAME }}/bubble-sort:latest
