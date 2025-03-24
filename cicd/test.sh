@@ -37,7 +37,7 @@ run_test "Negative and boundary values" "$input2" "$expected2"
 
 # Тест 3: Исправление некорректного ввода
 input3="0\n5\nabc\n12\n999\n-50\n30\n40\n20\n10"
-expected3="Sorted array: -50 10 20 30 40 "
+expected3="Sorted array: -50 12 20 30 40"
 run_test "Error correction" "$input3" "$expected3"
 
 # Тест 4: Минимальный случай
