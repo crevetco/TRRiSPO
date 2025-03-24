@@ -10,30 +10,47 @@ SRCS = main.cpp
 # Object files
 OBJS = $(SRCS:.cpp=.o)
 
+# Output directories
+BUILD_DIR = ../usr/bin
+INSTALL_DIR = /usr/bin
+
 # Executable name
 TARGET = my_program
 
-# Installation directory
-INSTALL_DIR = /usr/local/bin
+# Test executable
+TEST_TARGET = test_runner
 
-# Default target
-all: $(TARGET)
+# Main targets
+all: prepare $(BUILD_DIR)/$(TARGET)
 
-# Rule to build the executable
-$(TARGET): $(OBJS)
+prepare:
+	mkdir -p $(BUILD_DIR)
+
+# Main executable
+$(BUILD_DIR)/$(TARGET): $(OBJS)
 	$(CXX) $(CXXFLAGS) -o $@ $^
 
-# Rule to build object files
+# Object files
 %.o: %.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-# Clean up build files
+# Clean
 clean:
-	rm -f $(OBJS) $(TARGET)
+	rm -f $(OBJS) $(BUILD_DIR)/$(TARGET) $(BUILD_DIR)/$(TEST_TARGET)
 
-# Install the executable
-install: $(TARGET)
-	cp $(TARGET) $(INSTALL_DIR)
+# Install
+install: all
+	install -D -m 0755 $(BUILD_DIR)/$(TARGET) $(DESTDIR)$(INSTALL_DIR)/$(TARGET)
 
-# Phony targets
-.PHONY: all clean install
+# Test build
+test: prepare $(BUILD_DIR)/$(TEST_TARGET)
+	$(BUILD_DIR)/$(TEST_TARGET)
+
+# Test executable
+TEST_SRCS = tests/test_main.cpp
+TEST_OBJS = $(TEST_SRCS:.cpp=.o)
+
+$(BUILD_DIR)/$(TEST_TARGET): $(TEST_OBJS)
+	$(CXX) $(CXXFLAGS) -lgtest -lgtest_main -pthread -o $@ $^
+
+.PHONY: all prepare clean install test

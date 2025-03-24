@@ -1,0 +1,63 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Клонирование репозитория
+        uses: actions/checkout@v4
+
+      - name: Установка зависимостей
+        run: sudo apt update && sudo apt install -y build-essential checkinstall
+
+      - name: Сборка ПО
+        run: make
+        
+  tests:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Клонирование репозитория
+        uses: actions/checkout@v4
+
+      - name: Установка зависимостей
+        run: sudo apt update && sudo apt install -y build-essential checkinstall
+
+      - name: Сборка ПО
+        run: make
+        
+      - name: Запуск тестов
+        run: ./cicd/test.sh
+        
+  package:
+    needs: tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Клонирование репозитория
+        uses: actions/checkout@v4
+
+      - name: Установка зависимостей
+        run: sudo apt update && sudo apt install -y build-essential checkinstall
+
+      - name: Сборка ПО
+        run: make
+
+      - name: Сборка .deb пакета
+        run: sudo checkinstall --pkgname=find_max --pkgversion=1.0 --pkggroup=utils -y --install=no
+
+      - name: Переименование и сохранение пакета
+        run: mv find-max_1.0-1_amd64.deb find_max.deb
+
+      - name: Сохранение артефакта (.deb пакета)
+        uses: actions/upload-artifact@v4
+        with:
+          name: fbubble_sort_package
+          path: bubble_sort.deb
